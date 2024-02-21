@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Your existing styles remain unchanged */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-register-buttons {
+            margin-top: 20px;
+        }
+
+        .login-register-forms {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .login-form,
+        .register-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            /* Your existing button styles */
+        }
+    </style>
+</head>
+<body>
+
+<div class="banner">
+    <div class="navbar">
+        <div class="brn"><h1>SAI PHARMACY</h1></div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Record</a></li>
+            <li><a href="#">Employee</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="content">
+    <h1>PHARMACY MANAGEMENT</h1>
+    <p>Manage your pharmacy record</p>
+
+    <div class="login-register-buttons">
+        <button type="button">Login</button>
+        <button type="button">Register</button>
+    </div>
+
+    <div class="login-register-forms">
+        <form class="login-form" style="display: none;">
+            <div class="form-group">
+                <label for="login-username">Username:</label>
+                <input type="text" id="login-username" name="login-username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="login-password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+
+        <form class="register-form" style="display: none;">
+            <div class="form-group">
+                <label for="register-username">Username:</label>
+                <input type="text" id="register-username" name="register-username" placeholder="Choose a username" required>
+            </div>
+            <div class="form-group">
+                <label for="register-email">Email:</label>
+                <input type="email" id="register-email" name="register-email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="register-password">Password:</label>
+                <input type="password" id="register-password" name="register-password" placeholder="Choose a password" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginForm = document.querySelector(".login-form");
+        const registerForm = document.querySelector(".register-form");
+
+        document.querySelector("button:nth-of-type(1)").addEventListener("click", function() {
+            loginForm.style.display = "block";
+            registerForm.style.display = "none";
+        });
+
+        document.querySelector("button:nth-of-type(2)").addEventListener("click", function() {
+            loginForm.style.display = "none";
+            registerForm.style.display = "block";
+        });
+    });
+</script>
+
+</body>
+</html>
