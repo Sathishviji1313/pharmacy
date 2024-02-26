@@ -185,7 +185,6 @@ input[type="submit"] {
             <div class="submenu">
                 <a href="#" onclick="showForm('dashboardform')">Dashboard</a>
                 <a href="#" onclick="showForm('addMedicineForm')">Add Medicine</a>
-                <a href="#" onclick="showForm('deleteMedicineForm')">Delete Medicine</a>
                 <a href="#" onclick="showForm('totalmedicineform')">Total Medicine</a>
                 <div id="medicineListContainer"></div>
             </div>
@@ -219,7 +218,7 @@ $count = $row['count'];
 
 
 ?>
-<!DOCTYPE html>
+
 <body>
     <h2 class="tm">Total medicine <br>
     <?php  echo $count; ?></h2>
@@ -235,40 +234,75 @@ mysqli_close($conn);
         <div class="content" id="addMedicineForm">
         
             <h2>Add Medicine</h2>
+            
+            <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "pharmacy";
 
-            <form action="add.php" method="post" >
-                <!-- Your existing form code here -->
-                <label for="addMedicine"><br>Medicine Name :</label>
-                <input type="text" id="medicinename" name="medicinename" required>
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
 
-                <label for="supplie dte"><br>Expire date:</label>
-                <input type="text" id="date" name="sdate" required>
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-                <label for="supplie name"><br>Supplire name:</label>
-                <input type="text" id="sname" name="sname" required>
-<br>
-                <input type="submit"  value="submit">
-                
-            </form>
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if the delete button is clicked
+    if (isset($_POST['delete'])) {
+        $id_to_delete = $_POST['id_to_delete'];
+        $sql = "DELETE FROM medicines WHERE id = $id_to_delete";
+        
+        if ($conn->query($sql) === TRUE) {
+            echo "Record deleted successfully";
+        } else {
+            echo "Error deleting record: " . $conn->error;
+        }
+    } else { // If add button is clicked
+        $medicinename = $_POST['medicinename'];
+        $sdate = $_POST['sdate'];
+        $sname = $_POST['sname'];
+
+        $sql = "INSERT INTO medicines (medicinename, sdate, sname) VALUES ('$medicinename', '$sdate', '$sname')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Record inserted successfully";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+}
+
+$conn->close();
+?>
+
+
+    <title>Add/Delete Records</title>
+</head>
+<body>
+    <h2>Add New Record</h2>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        ID : <input type="number" name="id"><br><br>
+        Medicine Name: <input type="text" name="medicinename"><br><br>
+        Date: <input type="date" name="sdate"><br><br>
+        Name: <input type="text" name="sname"><br><br>
+        <input type="submit" name="add" value="Add">
+    </form>
+
+    <h2>Delete Record</h2>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        ID to Delete: <input type="number" name="id_to_delete"><br><br>
+        <input type="submit" name="delete" value="&#10006;">
+    </form>
+</body>
+</html>
+
         
         </div>
 
-        <div class="content" id="deleteMedicineForm">
-            <h2>Delete Medicine</h2>
-            <form action="deleteMedicine.php" method="post" onsubmit="return deleteMedicine();">
-                <!-- Delete Medicine Form Fields -->
-                <label for="medicineToDelete">Medicine Name to Delete:</label>
-                <input type="text" id="medicineToDelete" name="medicineToDelete" required>
-    
-                <label for="supplierToDelete">Supplier Name:</label>
-                <input type="text" id="supplierToDelete" name="supplierToDelete" required>
-    
-                <input type="submit" value="Delete">
-            </form>
-          
-            <div id="deleteMessage"></div>
-            
-        </div>
 
         <div  class="content" id="totalmedicineform">
             <h2>Medicine Table</h2>
